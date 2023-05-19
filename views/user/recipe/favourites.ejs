@@ -1,0 +1,27 @@
+<%- include('../../partials/header.ejs') %>
+
+<body>
+<%- include('../../partials/navbar-user.ejs') %>
+<div id="user-home-page">
+    <div class="container justify-content-center">
+        <%- include('../../partials/alerts.ejs') %>
+        <center><h1>Favourite Recipes</h1></center>
+        <%- include('recipes.ejs') %>
+        <!-- PAGINATION -->
+        <%- include('../../partials/pagination.ejs') %>
+        <% if (recipes == null) { %>
+
+        <center>
+            <h6 class="fw-normal">No recipes added to favourites yet..</h6>
+            <br>
+            <a href="/home/recipes" class="btn btn-primary" value="Back to Recipes Home">Back to Recipes Home</a>
+        </center>
+
+        <% } %>
+        
+        
+    </div>
+</div>
+</body>
+
+<%- include('../../partials/footer.ejs') %>

@@ -1,0 +1,64 @@
+<%- include('../../partials/header.ejs') %>
+<body>
+<%- include('../../partials/navbar-admin.ejs') %>
+<br>
+<div class="card page-card">
+    <div class="row justify-content-md-center mb-3">
+        <h1 class="card-title text-center" style="color:rgb(0, 16, 87); font-weight:bold">
+            Enter Product Details
+        </h1>
+    </div>
+    <div class="row justify-content-md-center">
+        <div class="col-md-8 col-md-offset-2">
+            <%- include('../../partials/alerts.ejs') %>
+            <% if (mode === "CREATE") { %>
+            <form action="/admin/inventory/create" method="POST" enctype=”multipart/form-data”>
+                <div class="form-group mb-3" >
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" name="name" required>
+                </div>
+                <div class="form-group mb-3" >
+                    <label for="description" class="form-label">Description</label>
+                    <input type="text" class="form-control" name="description">
+                </div>
+                <div class="form-group mb-3" >
+                    <label for="description" class="form-label">Quantity</label>
+                    <input type="text" class="form-control" name="quantity" required>
+                </div>
+                <div class="form-group mb-3" >
+                    <label for="description" class="form-label">Price</label>
+                    <input type="text" class="form-control" name="price" required>
+                </div>
+                <br><br>
+                <button class="btn btn-primary" type="submit" value="Save">Upload Product</button>
+                <a class="btn btn-light" href="/admin/inventory" value="Cancel">Cancel</a>
+                <br><br>
+            </form>
+            <% } else if (mode === "UPDATE" && product) {%>
+                <form action="/admin/inventory/<%=product.id%>/update" method="POST">
+                    <div class="form-group mb-3" >
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" name="name" value="<%=product.name%>" required>
+                    </div>
+                    <div class="form-group mb-3" >
+                        <label for="description" class="form-label">Description (Optional)</label>
+                        <input type="text" class="form-control" name="description" value="<%=product.description%>">
+                    </div>
+                    <div class="form-group mb-3" >
+                        <label for="quantity" class="form-label">Quantity</label>
+                        <input type="text" class="form-control" name="quantity" value="<%=product.quantity%>" required>
+                    </div>
+                    <div class="form-group mb-3" >
+                        <label for="price" class="form-label">Price</label>
+                        <input type="text" class="form-control" name="price" value="<%=product.price%>" required>
+                    </div>
+                    <button class="btn btn-primary" type="submit" value="Save">Save</button>
+                    <a class="btn btn-light" href="/admin/inventory" value="Cancel">Cancel</a>
+                    <br><br>
+                </form>
+            <% } %>
+        </div>
+    </div>
+</div>
+</body>
+<%- include('../../partials/footer.ejs') %>

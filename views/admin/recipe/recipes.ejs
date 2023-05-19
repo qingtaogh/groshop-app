@@ -1,0 +1,28 @@
+<br><br>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    <% if (recipes) { %>
+        <% for (let recipe of recipes) { %>
+        <div class="col">
+            <div class="card h-100">
+                <img src="<%= recipe.srcpath%>" class="card-img-top" style="width: 100%; height: 20vw; object-fit: cover;">
+                <div class="card-body">
+                    <a class="fa-pull-right text-end" href="#" id="dropdownMenuLink-me" data-bs-toggle="dropdown" aria-expanded="false" style="text-align:right">
+                        <i class="fa-solid fa-ellipsis-vertical "></i>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink-me">
+                        <li><a class="dropdown-item" href="/admin/recipes/<%=recipe.id%>/update" >Edit</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="onDelete(<%=recipe.id%>)" >Delete</a></li>
+                    </ul>
+                    <h5 class="card-title"><%=recipe.name%></h5>
+                    <p class="card-text"><%=recipe.cuisine%>, <%=recipe.prepTime%> <%=recipe.prepTimeUom%></p>
+                    <p class="card-text">Serving Size: <%=recipe.servingSize%></p>
+                    <p class="card-text">Difficulty: <%=recipe.difficulty%> / 5</p>
+                    <a href="/admin/recipes/<%=recipe.id%>" class="btn btn-primary">View Recipe</a>
+                </div>
+            </div>
+        </div>
+        <% } %>
+        <form id="deleteRecipeForm" method="POST" hidden></form>
+    <% } %>
+</div>
+<br><br>

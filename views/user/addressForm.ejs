@@ -1,0 +1,71 @@
+<%- include('../partials/header.ejs') %>
+<body>
+<%- include('../partials/navbar-user.ejs') %>
+<br>
+<div class="card page-card">
+    <div class="row justify-content-md-center mb-3">
+        <h1 class="card-title text-center" style="color:rgb(0, 16, 87); font-weight:bold">
+            Add/Update Address
+        </h1>
+    </div>
+    <div class="row justify-content-md-center">
+        <div class="col-md-8 col-md-offset-2">
+            <%- include('../partials/alerts.ejs') %>
+            <% if (mode === "CREATE") { %>
+                <form action="/home/address/create" method="POST">
+                    <div class="form-group mb-3" >
+                        <label for="name" class="form-label">Street / Building Name</label>
+                        <input type="text" class="form-control" name="name" required>
+                    </div>
+                    <div class="form-group mb-3" >
+                        <label for="floorNo" class="form-label">Floor No (Optional)</label>
+                        <input type="text" class="form-control" name="floorNo">
+                    </div>
+                    <div class="form-group mb-3" >
+                        <label for="unitNo" class="form-label">Unit No (Optional)</label>
+                        <input type="text" class="form-control" name="unitNo">
+                    </div>
+                    <div class="form-group mb-3" >
+                        <label for="postalCode" class="form-label">Postal Code</label>
+                        <input type="text" class="form-control" name="postalCode" required>
+                    </div>
+                    <div class="form-group mb-3" >
+                        <label for="country" class="form-label">Country</label>
+                        <input type="text" class="form-control" name="country" required>
+                    </div>
+                    <button class="btn btn-primary" type="submit" value="Save">Save</button>
+                    <a class="btn btn-light" href="/home/profile" value="Cancel">Cancel</a>
+                    <br><br>
+                </form>
+            <% } else if (mode === "UPDATE" && address) {%>
+                <form action="/home/address/<%=address.id%>/update" method="POST">
+                    <div class="form-group mb-3" >
+                        <label for="name" class="form-label">Street / Building Name</label>
+                        <input type="text" class="form-control" name="name" value="<%=address.name%>" required>
+                    </div>
+                    <div class="form-group mb-3" >
+                        <label for="floorNo" class="form-label">Floor No (Optional)</label>
+                        <input type="text" class="form-control" name="floorNo" value="<%=address.floorNo%>">
+                    </div>
+                    <div class="form-group mb-3" >
+                        <label for="unitNo" class="form-label">Unit No (Optional)</label>
+                        <input type="text" class="form-control" name="unitNo" value="<%=address.unitNo%>">
+                    </div>
+                    <div class="form-group mb-3" >
+                        <label for="postalCode" class="form-label">Postal Code</label>
+                        <input type="text" class="form-control" name="postalCode" value="<%=address.postalCode%>" required>
+                    </div>
+                    <div class="form-group mb-3" >
+                        <label for="country" class="form-label">Country</label>
+                        <input type="text" class="form-control" name="country" value="<%=address.country%>" required>
+                    </div>
+                    <button class="btn btn-primary" type="submit" value="Save">Save</button>
+                    <a class="btn btn-light" href="/home/profile" value="Cancel">Cancel</a>
+                    <br><br>
+                </form>
+            <% } %>
+        </div>
+    </div>
+</div>
+</body>
+<%- include('../partials/footer.ejs') %>

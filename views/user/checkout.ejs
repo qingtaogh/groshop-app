@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<title>GroShop Payment</title>
+<body>
+    <h3>Welcome to Payment Gateway</h3>
+    <form action="/home/checkout/submit" method="POST">
+       <script
+          src="//checkout.stripe.com/v2/checkout.js"
+          class="stripe-button"
+          data-key="pk_test_51N5q9IA6c6T1aIgQAXR2waaFyQ5msOTxy9LREPrL6L2mU2rPst6NGmgeMw7pzdF8uFuebdqrKLzTEtJDCtuosbZW00t3pcflOp"
+          data-amount="<%=checkoutTotal%>"
+          data-currency="SGD"
+          data-name="GroShop"
+          data-description="Groceries and other Products"
+          data-locale="auto" >
+        </script>
+        <input type="hidden" name="checkoutTotal" value="<%=checkoutTotal%>">
+    </form>
+</body>
+</html>

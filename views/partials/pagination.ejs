@@ -1,0 +1,26 @@
+<!-- PAGINATION -->
+<% if (pageObj && !isNaN(pageObj.totalPages)) { %>
+    <ul class="pagination justify-content-center">
+        <% if (pageObj.prevPage) { %>
+            <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
+            <li class="page-item"><a class="page-link fw-bold" href="?page=<%= pageObj.prevPage %>">&lt;</a></li>
+        <% } else { %>
+            <li class="page-item disabled"><span class="page-link" href="#">First</span></li>
+            <li class="page-item disabled"><span class="page-link fw-bold" href="#">&lt;</span></li>
+        <% } %>
+        <% //for (let i=1; i < pageObj.totalPages + 1; i++) { %>
+            <% //if (pageObj.currentPage === i) { %>
+                <li class="page-item active"><span class="page-link"><%= pageObj.currentPage %></span></li>
+            <% //} else { %>
+                <!-- <li class="page-item"><a class="page-link" href="?page=<%= //i %>"><%=// i %></a></li> -->
+            <% //} %>
+        <% //} %>
+        <% if (pageObj.nextPage) { %>
+            <li class="page-item"><a class="page-link fw-bold" href="?page=<%= pageObj.nextPage %>">&gt;</a></li>
+            <li class="page-item"><a class="page-link" href="?page=<%= pageObj.totalPages %>">Last</a></li>
+        <% } else { %>
+            <li class="page-item disabled"><span class="page-link fw-bold">&gt;</span></li>
+            <li class="page-item disabled"><span class="page-link">Last</span></li>
+        <% } %>
+    </ul>
+<% } %>

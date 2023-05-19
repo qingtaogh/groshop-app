@@ -1,0 +1,53 @@
+<%- include('../../partials/header.ejs') %>
+<body>
+<%- include('../../partials/navbar-user.ejs') %>
+
+<br>
+<div class="card page-card" id="cart-page">
+    <div class="row justify-content-md-center mb-3">
+        <%- include('../../partials/alerts.ejs') %>
+        <h1 class="card-title text-center" style="color:rgb(0, 16, 87); font-weight:bold">
+            My Orders
+        </h1>
+    </div>
+    <div class="row justify-content-md-center" id="cart-view">
+        <div class="col-md-8 col-md-offset-2">
+            <table class="table">
+                <tr>
+                    <th>Order No.</th>
+                    <th>Order Made at</th>
+                    <th>Total Cost</th>
+                    <th>Address</th>
+                    
+                </tr>
+                <% 
+                if(orderItem.length > 0)
+                {
+                    orderItem.forEach(item => {
+                %>
+                <tr>
+                    <td><%= item.id %></td>
+                    <td><%= new Date(item.createdAt) %></td>
+                    <td><%= item.amount %></td>
+                    <td><%= item.address %></td>
+                </tr>
+                <%
+                        
+                    })
+                %>
+                
+            
+                <%
+                }
+                %>
+
+                
+                
+                
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+<%- include('../../partials/footer.ejs') %>
+

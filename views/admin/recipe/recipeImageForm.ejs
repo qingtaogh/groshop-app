@@ -1,0 +1,50 @@
+<%- include('../../partials/header.ejs') %>
+<body>
+<%- include('../../partials/navbar-admin.ejs') %>
+<script>
+    function showPreview(event){
+        if(event.target.files.length > 0){
+            var src = URL.createObjectURL(event.target.files[0]);
+            var preview = document.getElementById("preview-image");
+            preview.src = src;
+            preview.style.display = "block";
+        }
+    }
+</script>
+<br>
+<div class="card page-card">
+    <div class="row justify-content-md-center mb-3">
+        <h1 class="card-title text-center" style="color:rgb(0, 16, 87); font-weight:bold">
+            Upload Recipe Photo
+        </h1>
+    </div>
+    <div class="row justify-content-md-center">
+        <div class="col-md-8 col-md-offset-2">
+            <%- include('../../partials/alerts.ejs') %>
+            <form action="/admin/recipes/<%=recipeId%>/uploadPhoto" method="POST" enctype="multipart/form-data">
+                <div class="form-group mb-3">
+                    <label for="image" class="form-label">Upload photo</label>
+                    <input type="file" name="image" class="form-control-file border" required>
+                </div>
+                <button class="btn btn-dark" type="submit" value="Upload">Upload</button>
+                <a class="btn btn-light" href="/admin/recipes" value="Cancel">Cancel</a>
+                <br><br>
+            </form>
+            <hr />
+            <% if (typeof image !== 'undefined' && image) { %>
+            <h4>Current Photo</h4>
+            <img id="uploaded-image" src="<%=image.srcPath%>" width="50%">
+            <br>
+            <form action="/admin/recipes/<%=recipeId%>/savePhoto" method="POST">
+                <div class="form-group mb-3">
+                    <input type="hidden" value="<%=image.id%>" name="imageId">
+                </div>
+                <button class="btn btn-primary" type="submit" value="Save">Save and Continue</button>
+            </form>
+            <br>
+            <% } %>
+        </div>
+    </div>
+</div>
+</body>
+<%- include('../../partials/footer.ejs') %>

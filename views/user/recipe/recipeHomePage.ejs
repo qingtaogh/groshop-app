@@ -1,0 +1,70 @@
+<%- include('../../partials/header.ejs') %>
+
+<body>
+<% if (user) { %>
+    <%- include('../../partials/navbar-user.ejs') %>
+<% } else { %>
+    <%- include('../../partials/navbar.ejs') %>
+<% } %>
+<div id="user-home-page">
+    <div class="container justify-content-center">
+        <% if (user == null) { %>
+            <div class="alert alert-info">
+                <i class="fa-solid fa-circle-exclamation"></i>&nbsp;&nbsp;&nbsp;
+                <a href="/register" class="link-primary">Sign up</a> or <a href="/login" class="link-primary">Log In</a> to start your order.
+            </div>
+        <% } %>
+        <%- include('../../partials/alerts.ejs') %>
+        <center><h1>All Recipes_demo</h1></center>
+        <div class="row justify-content-md-center">
+            <div class="card col-md-8 col-md-offset-2">
+                <div class="card-body">
+                    <form id="searchRecipeForm" action="/home/recipes/search" method="GET">
+                        <div class="mb-3 row">
+                            <label for="name" class="col-sm-4 col-form-label">Search by Name: </label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" name="name" id="name">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="cuisine" class="col-sm-4 col-form-label">Search by Cuisine: </label>
+                            <div class="col-sm-4">
+                                <select id="cuisine" class="form-select form-control" name="cuisine">
+                                    <option value=""></option>
+                                    <option value="Local">Local</option>
+                                    <option value="Chinese">Chinese</option>
+                                    <option value="Malay">Malay</option>
+                                    <option value="Indian">Indian</option>
+                                    <option value="Thai">Thai</option>
+                                    <option value="Western">Western</option>
+                                    <option value="Italian">Italian</option>
+                                    <option value="Indonesian">Indonesian</option>
+                                    <option value="Japanese">Japanese</option>
+                                    <option value="Korean">Korean</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="difficulty" class="col-sm-4 col-form-label">Search by Difficulty: </label>
+                            <div class="col-sm-6">
+                                <input type="number" class="form-control" name="difficulty" id="difficulty" min="1" max="5">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="servingSize" class="col-sm-4 col-form-label">Search by Serving Size: </label>
+                            <div class="col-sm-6">
+                                <input type="number" class="form-control" name="servingSize" id="servingSize" min="1" max="100">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </form>                    
+                </div>
+            </div>
+        </div>
+        <%- include('recipes.ejs') %>
+        <%- include('../../partials/pagination.ejs') %>
+    </div>
+</div>
+</body>
+
+<%- include('../../partials/footer.ejs') %>

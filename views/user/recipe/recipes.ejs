@@ -1,0 +1,19 @@
+<br>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    <% if (recipes) { %>
+        <% for (let recipe of recipes) { %>
+        <div class="col">
+            <div class="card h-100">
+                <img src="<%= recipe.srcpath%>" class="card-img-top" style="width: 100%; height: 20vw; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title"><%=recipe.name%></h5>
+                    <p class="card-text"><%=recipe.cuisine%>, <%=recipe.prepTime%> <%=recipe.prepTimeUom%>,  Serves <%=recipe.servingSize%></p>
+                    <p class="card-text">Difficulty: <%=recipe.difficulty%> / 5</p>
+                    <a href="/home/recipes/<%=recipe.id%>" class="btn btn-primary">View Recipe</a>
+                </div>
+            </div>
+        </div>
+        <% } %>
+    <% } %>
+</div>
+<br><br>

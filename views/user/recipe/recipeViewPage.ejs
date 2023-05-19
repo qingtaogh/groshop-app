@@ -1,0 +1,201 @@
+<%- include('../../partials/header.ejs') %>
+<body>
+<% if (user) { %>
+    <%- include('../../partials/navbar-user.ejs') %>
+<% } else { %>
+    <%- include('../../partials/navbar.ejs') %>
+<% } %>
+
+<div class="card page-card">
+    <% if (user == null) { %>
+        <div class="row justify-content-md-center">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="alert alert-info">
+                    <i class="fa-solid fa-circle-exclamation"></i>&nbsp;&nbsp;&nbsp;
+                    <a href="/register" class="link-primary">Sign up</a> or <a href="/login" class="link-primary">Log In</a> to start your order.
+                </div>
+            </div>
+        </div>
+    <% } %>
+    <div class="row justify-content-md-center mb-3">
+        <div class="col-md-8 col-md-offset-2">
+            <%- include('../../partials/alerts.ejs') %>
+<% if (recipe) { %>
+            <h1 class="card-title text-center fw-bold" style="color:rgb(0, 16, 87);">
+                <%= recipe.name %>
+            </h1>
+            <h6 class="fw-normal text-center">
+                <i class="fa-solid fa-utensils"></i> &nbsp; <%= recipe.cuisine %> &nbsp; &nbsp; &nbsp;&nbsp;
+                <i class="fa-solid fa-hourglass-end"></i> &nbsp; <%=recipe.prepTime%> <%=recipe.prepTimeUom%> &nbsp; &nbsp;&nbsp; &nbsp; 
+                <i class="fa-solid fa-gauge"></i> &nbsp; <%=recipe.difficulty%>/5 &nbsp; &nbsp;&nbsp; &nbsp; 
+                <i class="fa-solid fa-user"></i> &nbsp; <%=recipe.servingSize%>
+            </h6>   
+            <% if (recipe.description) { %>
+            <h6 class="fw-light text-center">Description: <%= recipe.description %></h6>
+            <% } %>
+            <% if (user) { %>
+            <div class="text-center">
+                <% if (favourite) { %>
+                    <form action="/home/recipes/<%=recipe.id%>/unfavourite" method="POST">
+                        <button type="Submit" class="btn btn-danger text-center" value="Unfavourite"><i class="fa-solid fa-circle-minus"></i>&nbsp; Unfavourite </button>
+                    </form>
+                <% } else { %> 
+                    <form action="/home/recipes/<%=recipe.id%>/favourite" method="POST">
+                        <button type="Submit" class="btn btn-success text-center" value="Favourite"><i class="fa-solid fa-circle-plus"></i>&nbsp; Favourite </button>
+                    </form>
+                <% } %> 
+                <form action="/home/cart/<%=user.id%>/addToCart" method="POST">
+                    <input type="hidden" name="recipeId" value="<%= recipe.id %>" /> 
+                    <button type="submit" class="btn btn-success text-center" >Add to Cart</button>
+                </form>
+            </div>
+            <% } %>
+            
+            
+        </div>
+    </div>
+    <!-- <hr /> -->
+    <% if (typeof image !== 'undefined' && image) { %>
+    <div class="row justify-content-md-center mb-3">
+        <div class="col-md-8 col-md-offset-2 text-center">
+            <img id="uploaded-image" src="<%=image.srcPath%>" width="70%">
+            <br>
+        </div>
+
+    </div>
+    <% } %>
+    <div class="row justify-content-md-center">
+        <div class="col-md-8 col-md-offset-2">
+
+            <br>
+            <% if (ingredients) { %>
+                <div class="row justify-content-md-center mb-3">
+                    <h2 class="fw-bold" style="color:rgb(0, 16, 87);">
+                        Ingredients
+                    </h2>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                    <% for (let i in ingredients) { %>
+                    <% const curr = ingredients[i] %>
+                    <div class="row">
+                            <div class="col-sm-1"><%= parseInt(i)+1 %>. </div>
+                            <div class="col-sm-8">
+                                <%= curr.amount %>
+                                <% if (curr.uom !== 'quantity') { %>
+                                <%= curr.uom %> 
+                                <% } %>
+                                x
+                                <%= curr.name %> 
+                                <% if (curr.description) { %>
+                                    (<%= curr.description %>)
+                                <% } %>
+                            </div>
+                    </div>
+                    <% } %>
+                    </div>
+                </div>
+            <% } %>
+            <br>
+            <% if (steps) { %>
+                <div class="row justify-content-md-center mb-3">
+                    <h2 class="fw-bold" style="color:rgb(0, 16, 87);">
+                        Steps
+                    </h2>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                    <% for (let i in steps) { %>
+                    <% const curr = steps[i] %>
+                        <div class="row">
+                           <div class="col-sm-1"><%= parseInt(i)+1 %>. </div>
+                            <div class="col-sm-8">
+                                <%= steps[i].description %> 
+                            </div> 
+                        </div>
+                    <% } %>
+                    </div>
+                </div>
+            <% } %>
+            <br>
+            <div class="row justify-content-md-center">
+                <h2 class="fw-bold" style="color:rgb(0, 16, 87);">
+                    Comments
+                </h2>
+                <% if (user) { %>
+                <form id="postCommentForm" action="/home/recipes/<%=recipe.id%>/comment" method="POST">
+                    <div class="form-group mb-2">
+                        <textarea class="form-control" name="content" rows="2" ></textarea> 
+                    </div>
+                    <button type="submit" class="btn btn-success mb-2" >Post</button>
+                </form>
+                <% } else { %>
+                    <p class="fw-lighter">
+                        <a href="/register" class="link-primary">Sign up</a> or <a href="/login" class="link-primary">Log In</a> to post a comment.
+                    </p>
+                <% } %>
+                <div id="comments_section">
+                </div>
+                <div >
+                    <button type="button" class="btn btn-dark mb-2" id="load_button" onclick="load_comments_data();">Load More</button>   
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row justify-content-md-center">
+        <div class="col-md-8 col-md-offset-2">
+            <a href="/home/recipes" class="btn btn-primary" value="Back to Recipes Home">Back to Recipes Home</a>
+        </div>
+    </div>
+    <hr />
+</div>
+
+
+<script>
+    const comments_section = document.getElementById('comments_section')
+    const load_button = document.getElementById('load_button')
+    var start_index = 0
+    var number_of_record = 5 // allowing 5 comments to be loaded at a time.
+    load_comments_data()
+
+    async function load_comments_data() {
+        load_button.disabled = true;
+        const url = `http://localhost:4003/${<%=recipe.id%>}/getcomments/${start_index}/${number_of_record}`
+        await fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            comments = data["comments"]
+            let html = ''
+            if (comments.length > 0) {
+                comments.forEach(comment => {
+                    html += `
+                    <div class="card mb-1" >
+                        <p class="card-body" style="padding:1%">${comment.content}</p>
+                        <p class="card-text text-end " style="padding-right:1%"><small class="small fw-light fst-italic text-muted" >Posted by ${comment.author} on ${comment.createdAt}</small></p>
+                    </div>
+                    `
+                })
+                start_index += comments.length
+                load_button.disabled = false
+            } else {
+                html += `<p>No more comments found</p>`
+                load_button.remove()
+            }
+            comments_section.innerHTML += html
+            // window.scrollTo(0, document.body.scrollHeight);
+        })
+    }
+
+</script>
+<% } else { %>
+    <div class="row justify-content-md-center">
+        <div class="col-md-8 col-md-offset-2">
+            <a href="/home/recipes" class="btn btn-primary" value="Back to Recipes Home">Back to Recipes Home</a>
+        </div>
+    </div>
+<% } %>
+</body>
+<%- include('../../partials/footer.ejs') %>

@@ -1,0 +1,18 @@
+<%- include('../partials/header.ejs') %>
+<body>
+
+<% if (user) { %>
+    <%- include('../partials/navbar-user.ejs') %>
+<% } else { %>
+    <%- include('../partials/navbar.ejs') %>
+<% } %>
+<div id="user-home-page">
+    <div class="container justify-content-center">
+        <%- include('../partials/alerts.ejs') %>
+        <h1>HOME PAGE...</h1>
+        <%- include('recipe/recipes.ejs') %>
+    </div>
+</div>
+
+</body>
+<%- include('../partials/footer.ejs') %>

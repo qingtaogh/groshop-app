@@ -1,0 +1,33 @@
+<nav class="navbar sticky-top navbar-expand-md navbar-light bg-light d-flex" style="padding-left: 3%;">
+    <div class="container-fluid">
+        <a class="navbar-brand h1"  href="/home">GroShop</a>
+
+        <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/home/recipes">Recipes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/home/recipes/favourites">My Favourites</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/home/orders/myorders">My Orders</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/home/cart/mycart">My Cart</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/home/profile">My Profile</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav navbar-right">
+            <!-- <li class="nav-item">
+                <a class="nav-link" href="#">Signed in as: <%= //user.username %></a>
+            </li> -->
+            <form action="/logout" method="POST" class="d-flex me-2">
+                <button class="btn btn-success" type='submit'>Log Out</button>
+            </form>  
+        </ul>
+
+    </div>
+
+</nav>

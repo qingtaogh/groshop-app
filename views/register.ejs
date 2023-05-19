@@ -1,0 +1,44 @@
+<%- include('partials/header.ejs') %>
+<body>
+<%- include('partials/navbar.ejs') %>
+<div id = "welcome-view" class="d-flex align-items-center justify-content-center">
+    <div id="welcome-card" class="card w-50 mx-auto my-auto">
+        <br>
+        <div class="row justify-content-md-center mb-3">
+            <h1 class="card-title text-center" style="color:rgb(0, 16, 87); font-weight:bold">
+                Sign Up
+            </h1>
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="col-md-8 col-md-offset-2">
+                <div id="register-contents">
+                    <%- include('partials/alerts.ejs') %>
+                    <form action="/register" method="post">
+                        <div class="form-group mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" name="username" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="email" class="form-label">Email address</label>
+                            <input type="email" class="form-control" name="email" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" name="password" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="passwordConfirmation" class="form-label">Confirm Password</label>
+                            <input class="form-control" type="password" name="passwordConfirmation" required>
+                        </div>
+                        <button class="btn btn-primary" type="submit" value="Register">Register</button>
+                    </form>
+                    <br>
+                    <p>Already have an account? <a href='/login' class="link-primary">Log In</a> </p>
+                </div>
+            </div>
+            <!-- <br> -->
+        </div>
+    </div>
+</div>
+</body>  
+<%- include('partials/footer.ejs') %>

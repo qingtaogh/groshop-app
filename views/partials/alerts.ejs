@@ -1,0 +1,21 @@
+
+<% if (messages.success) { %>
+    <% for (let i in messages.success) { %>
+    <div class="alert alert-success"><i class="fa-solid fa-circle-exclamation"></i> &nbsp<%= messages.success[i] %></div>
+    <% } %>
+<% } %>
+<% if (messages.error) { %>
+    <% for (let i in messages.error) { %>
+    <div class="alert alert-danger"><i class="fa-solid fa-circle-exclamation"></i> &nbsp<%= messages.error[i] %></div>
+    <% } %>
+<% } %>
+<% if (messages.warning) { %>
+    <% for (let i in messages.warning) { %>
+    <div class="alert alert-warning"><i class="fa-solid fa-circle-exclamation"></i> &nbsp<%= messages.warning[i] %></div>
+    <% } %>
+<% } %>
+<% if (messages.info) { %>
+    <% for (let i in messages.info) { %>
+    <div class="alert alert-info"><i class="fa-solid fa-circle-exclamation"></i> &nbsp<%= messages.info[i] %></div>
+    <% } %>
+<% } %>

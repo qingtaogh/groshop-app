@@ -1,0 +1,119 @@
+<%- include('../../partials/header.ejs') %>
+<body>
+<%- include('../../partials/navbar-admin.ejs') %>
+<script type="text/javascript">
+    function onDelete(recipeId, ingredientId) {
+        if (confirm("Are you sure you want to delete this ingredient?")) {
+            var deleteUrl = `/admin/recipes/${recipeId}/ingredients/${ingredientId}/delete`
+            document.getElementById("deleteIngredientForm").action = deleteUrl
+            document.getElementById("deleteIngredientForm").submit();
+        }
+    }
+    function onUpdate(recipeId, id, name, description, amount, uom) {
+        var updateUrl = `/admin/recipes/${recipeId}/ingredients/${id}/update`
+        var createUrl = `/admin/recipes/${recipeId}/ingredients/add`
+        
+        // setting form's values to ingredient's values
+        document.getElementById("name").value = name
+        document.getElementById("description").value = description
+        document.getElementById("amount").value = amount
+        opt = document.querySelector(`#ingredientUom option[value="${uom}"]`);
+        opt.selected = true;
+
+        // set form action
+        document.getElementById("ingredientForm").action = updateUrl
+        document.getElementById("ingredientFormButton").innerHTML = "Update Ingredient"
+        document.getElementById("cancelUpdateButton").removeAttribute("hidden")
+    }
+</script>
+<div class="card page-card">
+    <div class="row justify-content-md-center mb-3">
+        <h2 class="card-title text-center" style="color:rgb(0, 16, 87); font-weight:bold">
+            Enter Recipe Ingredients
+        </h1>
+    </div>
+    <div class="row justify-content-md-center">
+        <div class="col-md-8 col-md-offset-2">
+            <%- include('../../partials/alerts.ejs') %>
+            <form id="ingredientForm" action="/admin/recipes/<%=recipeId%>/ingredients/add" method="POST">
+                <div class="mb-3 row">
+                    <label for="name" class="col-sm-2 col-form-label">Name: </label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" name="name" id="name" required>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="description" class="col-sm-2 col-form-label">Description: </label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" name="description" id="description" placeholder="e.g. chopped, diced...">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="amount" class="col-sm-2 col-form-label">Amount: </label>
+                    <div class="col-sm-2">
+                        <input type="number" class="form-control" name="amount" id="amount" min="0" required>
+                    </div>
+                    <div class="col-sm-4">
+                        <select id="ingredientUom" class="form-select form-control" name="uom">
+                            <option value="quantity">quantity</option>
+                            <option value="ml">ml</option>
+                            <option value="l">l</option>
+                            <option value="g">g</option>
+                            <option value="kg">kg</option>
+                            <option value="teaspoon">teaspoon</option>
+                            <option value="tablespoon">tablespoon</option>
+                            <option value="cup">cup</option>
+                        </select>
+                    </div>
+                </div>
+                <button id="ingredientFormButton" class="btn btn-dark" type="submit">Add Ingredient</button>
+                <a id="cancelUpdateButton" class="btn btn-light" href="/admin/recipes/<%=recipeId%>/ingredients" value="Cancel Update" hidden>Cancel Update</a>
+            </form>
+            <br>
+
+            <% if (ingredients) { %>
+                <a class="btn btn-primary" href="/admin/recipes/<%=recipeId%>/steps" value="Continue">Continue</a>
+                <a class="btn btn-light" href="/admin/recipes" value="Cancel Update">Cancel</a>
+                <hr />
+                <br>
+                <div class="row justify-content-md-center mb-3">
+                    <h2 class="text-center" style="color:rgb(0, 16, 87); font-weight:bold">
+                        Current Recipe Ingredients
+                    </h2>
+                </div>
+                <% for (let i in ingredients) { %>
+                    <% const curr = ingredients[i] %>
+                    <div class="card">
+                        <div class="card-body row">
+                            <div class="col-sm-1"><%= parseInt(i)+1 %>. </div>
+                            <div class="col-sm-8">
+                                <%= ingredients[i].amount %>
+                                <% if (ingredients[i].uom !== 'quantity') { %>
+                                <%= ingredients[i].uom %> 
+                                <% } %>
+                                x
+                                <%= ingredients[i].name %> 
+                                <% if (ingredients[i].description) { %>
+                                    (<%= ingredients[i].description %>)
+                                <% } %>
+                            </div>
+                            <div class="col-sm-3 text-end">
+                                <a href="#" onclick="onUpdate(<%=recipeId%>, <%=curr.id %>, '<%=curr.name %>', '<%=curr.description %>', '<%=curr.amount %>', '<%=curr.uom %>')">
+                                    <i class="fa-solid fa-pen" data-toggle="tooltip" data-placement="top" title="Update Ingredient"></i>
+                                </a>
+                                &nbsp;
+                                <a href="#" onclick="onDelete(<%=recipeId%>, <%=ingredients[i].id%>)"><i class="fa-solid fa-trash-can" data-toggle="tooltip" data-placement="top" title="Delete Ingredient"></i></a>
+                            </div>
+                        </div>
+
+                    </div>
+                <% } %>
+                <form hidden id="deleteIngredientForm" method="POST"></form>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+
+</body>
+<%- include('../../partials/footer.ejs') %>

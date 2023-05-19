@@ -1,0 +1,97 @@
+<%- include('../../partials/header.ejs') %>
+<body>
+<%- include('../../partials/navbar-admin.ejs') %>
+<div class="card page-card">
+    <% if (recipe) { %>
+    <div class="row justify-content-md-center mb-3">
+        <h1 class="card-title text-center" style="color:rgb(0, 16, 87); font-weight:bold">
+            <%= recipe.name %>
+        </h1>
+        <h6 class="fw-normal text-center">
+            <i class="fa-solid fa-utensils"></i> &nbsp; <%= recipe.cuisine %> &nbsp; &nbsp; &nbsp;&nbsp;
+            <i class="fa-solid fa-hourglass-end"></i> &nbsp; <%=recipe.prepTime%> <%=recipe.prepTimeUom%> &nbsp; &nbsp;&nbsp; &nbsp; 
+            <i class="fa-solid fa-gauge"></i> &nbsp; <%=recipe.difficulty%>/5 &nbsp; &nbsp;&nbsp; &nbsp; 
+            <i class="fa-solid fa-user"></i> &nbsp; <%=recipe.servingSize%>
+        </h6>        
+        <% if (recipe.description) { %>
+        <h6 class="fw-light text-center">Description: <%= recipe.description %></h6>
+        <% } %>
+    </div>
+
+    <% if (typeof image !== 'undefined') { %>
+    <div class="row justify-content-md-center mb-3">
+        <div class="col-md-8 col-md-offset-2 text-center">
+            <img id="uploaded-image" src="<%=image.srcPath%>" width="70%">
+            <br>
+        </div>
+
+    </div>
+
+    <% } %>
+    <div class="row justify-content-md-center">
+        <div class="col-md-8 col-md-offset-2">
+            <%- include('../../partials/alerts.ejs') %>
+            <br>
+            <% if (ingredients) { %>
+                <div class="row justify-content-md-center mb-3">
+                    <h2 class="fw-bold" style="color:rgb(0, 16, 87);">
+                        Ingredients
+                    </h2>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                    <% for (let i in ingredients) { %>
+                    <% const curr = ingredients[i] %>
+                    <div class="row">
+                            <div class="col-sm-1"><%= parseInt(i)+1 %>. </div>
+                            <div class="col-sm-8">
+                                <%= curr.amount %>
+                                <% if (curr.uom !== 'quantity') { %>
+                                <%= curr.uom %> 
+                                <% } %>
+                                x
+                                <%= curr.name %> 
+                                <% if (curr.description) { %>
+                                    (<%= curr.description %>)
+                                <% } %>
+                            </div>
+                    </div>
+                    <% } %>
+                    </div>
+                </div>
+            <% } %>
+            <br>
+            <% if (steps) { %>
+                <div class="row justify-content-md-center mb-3">
+                    <h2 class="fw-bold" style="color:rgb(0, 16, 87);">
+                        Steps
+                    </h2>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                    <% for (let i in steps) { %>
+                    <% const curr = steps[i] %>
+                        <div class="row">
+                           <div class="col-sm-1"><%= parseInt(i)+1 %>. </div>
+                            <div class="col-sm-8">
+                                <%= steps[i].description %> 
+                            </div> 
+                        </div>
+                    <% } %>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    </div>
+    <br>
+    <% } %>    
+    <div class="row justify-content-md-center">
+        <div class="col-md-8 col-md-offset-2">
+            <a href="/admin/recipes" class="btn btn-primary" value="Back to Recipes Home">Back to Recipes Home</a>
+        </div>
+    </div>
+</div>
+
+
+</body>
+<%- include('../../partials/footer.ejs') %>

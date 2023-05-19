@@ -1,0 +1,129 @@
+<%- include('../../partials/header.ejs') %>
+<body>
+<%- include('../../partials/navbar-admin.ejs') %>
+<br>
+<div class="card page-card">
+    <div class="row justify-content-md-center mb-3">
+        <h1 class="card-title text-center" style="color:rgb(0, 16, 87); font-weight:bold">
+            Enter Recipe Details
+        </h1>
+    </div>
+    <div class="row justify-content-md-center">
+        <div class="col-md-8 col-md-offset-2">
+            <%- include('../../partials/alerts.ejs') %>
+            <% if (mode === 'CREATE') { %>
+            <form action="/admin/recipes/create" method="POST" enctype=”multipart/form-data”>
+                <div class="form-group mb-3" >
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" name="name" required>
+                </div>
+                <div class="form-group mb-3" >
+                    <label for="description" class="form-label">Description</label>
+                    <input type="text" class="form-control" name="description">
+                </div>
+                <div class="form-group mb-3" >
+                    <label for="cuisine">Cuisine</label>
+                    <select id="cuisine" class="form-select" name="cuisine" required>
+                        <option value="Local">Local</option>
+                        <option value="Chinese">Chinese</option>
+                        <option value="Malay">Malay</option>
+                        <option value="Indian">Indian</option>
+                        <option value="Thai">Thai</option>
+                        <option value="Western">Western</option>
+                        <option value="Italian">Italian</option>
+                        <option value="Indonesian">Indonesian</option>
+                        <option value="Japanese">Japanese</option>
+                        <option value="Korean">Korean</option>
+                    </select>
+                </div>
+                <div class="form-group mb-3" >
+                    <div class="col-md-3">
+                        <label for="difficulty">Difficulty (out of 5)</label>
+                        <input type="number" class="form-control" name="difficulty" id="difficulty" min="1" max="5" required>
+                    </div>
+                </div>
+                <div class="form-group mb-3" >
+                    <div class="col-md-3">
+                        <label for="servingSize">Serving Size</label>
+                        <input type="number" class="form-control" name="servingSize" id="servingSize" min="1" required>
+                    </div>
+                </div>
+                <label for="prepTime" class="form-label">Prep Time</label>
+                <div class="input-group row">
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" name="prepTime" required>
+                    </div>
+                    <div class="col-md-3">
+                        <select id="prepTimeUom" class="form-select form-control" name="prepTimeUom" required>
+                            <option value="minute">minute(s)</option>
+                            <option value="hour">hour(s)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <br><br>
+                <button class="btn btn-primary" type="submit" value="Save">Create Recipe</button>
+                <a class="btn btn-light" href="/admin/recipes" value="Cancel">Cancel</a>
+                <br><br>
+            </form>
+            <% } else if (mode === 'UPDATE' && recipe) { %>
+                <form action="/admin/recipes/<%= recipe.id %>/update" method="POST" >
+                    <div class="form-group mb-3" >
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" name="name" value="<%=recipe.name%>" required>
+                    </div>
+                    <div class="form-group mb-3" >
+                        <label for="description" class="form-label">Description</label>
+                        <input type="text" class="form-control" name="description" value="<%=recipe.description%>">
+                    </div>
+                    <div class="form-group mb-3" >
+                        <label for="cuisine">Cuisine</label>
+                        <select id="cuisine" class="form-select" name="cuisine"   required>
+                            <option value="Local" <% if(recipe.cuisine === "Local"){ %>selected<% } %> >Local</option>
+                            <option value="Chinese" <% if(recipe.cuisine === "Chinese"){ %>selected<% } %>>Chinese</option>
+                            <option value="Malay" <% if(recipe.cuisine === "Malay"){ %>selected<% } %>>Malay</option>
+                            <option value="Indian" <% if(recipe.cuisine === "Indian"){ %>selected<% } %>>Indian</option>
+                            <option value="Thai" <% if(recipe.cuisine === "Thai"){ %>selected<% } %>>Thai</option>
+                            <option value="Western" <% if(recipe.cuisine === "Western"){ %>selected<% } %>>Western</option>
+                            <option value="Italian" <% if(recipe.cuisine === "Italian"){ %>selected<% } %>>Italian</option>
+                            <option value="Indonesian" <% if(recipe.cuisine === "Indonesian"){ %>selected<% } %>>Indonesian</option>
+                            <option value="Japanese" <% if(recipe.cuisine === "Japanese"){ %>selected<% } %>>Japanese</option>
+                            <option value="Korean" <% if(recipe.cuisine === "Korean"){ %>selected<% } %>>Korean</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-3" >
+                        <div class="col-md-3">
+                            <label for="difficulty">Difficulty (out of 5)</label>
+                            <input type="number" class="form-control" name="difficulty" id="difficulty" min="1" max="5" value="<%=recipe.difficulty%>" required>
+                        </div>
+                    </div>
+                    <div class="form-group mb-3" >
+                        <div class="col-md-3">
+                            <label for="servingSize">Serving Size</label>
+                            <input type="number" class="form-control" name="servingSize" id="servingSize" value="<%=recipe.servingSize%>" min="1" required>
+                        </div>
+                    </div>
+                    <label for="prepTime" class="form-label">Prep Time</label>
+                    <div class="input-group row">
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" name="prepTime" value="<%=recipe.prepTime%>" required>
+                        </div>
+                        <div class="col-md-3">
+                            <select id="prepTimeUom" class="form-select form-control" name="prepTimeUom" required>
+                                <option value="minute" <% if(recipe.prepTimeUom === "minute"){ %>selected<% } %>>minute(s)</option>
+                                <option value="hour" <% if(recipe.prepTimeUom === "hour"){ %>selected<% } %>>hour(s)</option>
+                            </select>
+                        </div>
+                    </div>
+    
+                    <br><br>
+                    <button class="btn btn-primary" type="submit" value="Save">Update</button>
+                    <a class="btn btn-light" href="/admin/recipes" value="Cancel">Cancel</a>
+                    <br><br>
+                </form>            
+            <% } %>
+        </div>
+    </div>
+</div>
+</body>
+<%- include('../../partials/footer.ejs') %>

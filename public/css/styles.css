@@ -1,0 +1,30 @@
+#welcome-card {
+    padding: 2%;
+}
+
+.nav-tabs{
+    width:100%;
+    display:inline-flex
+}
+
+.nav-tabs .nav-link {
+    border-radius: 0px;
+    border-bottom: 1px solid #0d6efd40;
+}
+
+#user-home-page {
+    padding: 2%; 
+}
+#user-profile-view, #user-profile-card, #user-profile-address-card {
+    padding: 2%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+#address-view {
+    padding: 2%;
+}
+
+.page-card {
+    padding: 2%;
+}
